@@ -8,7 +8,7 @@ metadata:
 spec:
   generators:
   - git:
-    repoURL: 'ssh://git@github.com:Tiriyon/AoA.git'
+      repoURL: 'ssh://git@github.com:Tiriyon/AoA.git'
       revision: main
       files:
       - path: "{{ .Values.global.path }}/configs/*.yaml"
