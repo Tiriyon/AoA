@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: environments
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      directories:
+      - path: applicationsets/*/*/*
+      repoURL: 'git@github.com:Tiriyon/AoA.git'
+      revision: main
+  template:
+    metadata:
+      name: env-{{ path[1] }}-{{ path[2] }}-{{ path.basename }}
+    spec:
+      destination:
+        name: in-cluster
+        namespace: argocd
+      project: environments
+      source:
+        helm:
+          values: |
+            global:
+              path: '{{ path }}'
+        path: '{{ path }}'
+        repoURL: git@github.com:Tiriyon/AoA.git
+        targetRevision: main
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true
