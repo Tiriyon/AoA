@@ -17,14 +17,14 @@ spec:
       destination:
         name: in-cluster
         namespace: argocd
-      project: environments
+      project: default
       source:
         helm:
           values: |
             global:
               path: '{{ path }}'
         path: '{{ path }}'
-        repoURL: git@github.com:Tiriyon/AoA.git
+        repoURL: 'git@github.com:Tiriyon/AoA.git'
         targetRevision: main
       syncPolicy:
         automated: {}

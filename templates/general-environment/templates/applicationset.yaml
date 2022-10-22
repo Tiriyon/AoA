@@ -26,7 +26,7 @@ spec:
         path: '{{`{{ source.path }}`}}'
         repoURL: 'ssh://git@github.com:Tiriyon/appmanifests.git'
         targetRevision: main
-        {{*/
+        {{/*
         targetRevision: '{{`{{ path[1] }}`}}'
         */}}
       syncPolicy:
