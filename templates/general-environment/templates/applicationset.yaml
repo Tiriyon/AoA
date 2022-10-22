@@ -8,7 +8,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: 'ssh://git@github.com:Tiriyon/AoA.git'
+      repoURL: 'git@github.com:Tiriyon/AoA.git'
       revision: main
       files:
       - path: "{{ .Values.global.path }}/configs/*.yaml"
@@ -24,7 +24,7 @@ spec:
         helm:
           values: '{{`{{ source.helm.values }}`}}'
         path: '{{`{{ source.path }}`}}'
-        repoURL: 'ssh://git@github.com:Tiriyon/appmanifests.git'
+        repoURL: 'git@github.com:Tiriyon/appmanifests.git'
         targetRevision: main
         {{/*
         targetRevision: '{{`{{ path[1] }}`}}'
