@@ -1,0 +1,4 @@
+argocd:
+  appName: an-app
+source:
+  path: an_app

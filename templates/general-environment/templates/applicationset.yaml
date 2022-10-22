@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  # name: apigw-qa
+  # name: test-appset
+  name: {{ include "general-environment.fullname" . }}
+  annotations:
+    templateName: {{ .Template.Name }}
+    templateBasePath: {{ .Template.BasePath }}
+spec:
+  generators:
+  - git:
+      repoURL: 'ssh://git@digitalmng:8022/argocd/environments.git'
+      revision: new_argo
+      files:
+      - path: "{{ .Values.global.path }}/configs/*.yaml"
+      # - path: "applicationsets/env/in-cluster/apigw/configs/*.yaml"
+      {{- /*
+      # - path: "{{ path[0] }}/{{ path[1] }}/{{ path[2] }}/configs/*.yaml"
+      */}}
+  template:
+    metadata:
+      {{- /*
+      # name: '{{ argocd.appName }}-qa'
+      */}}
+      name: '{{`{{ path[1] }}-{{ path[2] }}-{{ argocd.appName }}`}}'
+      # name: test-app
+    spec:
+      destination:
+        {{- /*
+        # name: '{{ destination.cluster }}'
+        */}}
+        name: '{{`{{ path[2] }}`}}'
+        namespace: '{{`{{ path[1] }}`}}'
+        # namespace: 'test-ns'
+        # namespace: {{`{{ path.basename }}-demo`}}
+      project: default
+      source:
+        helm:
+          values: '{{`{{ source.helm.values }}`}}'
+        path: '{{`{{ source.path }}`}}'
+        repoURL: 'ssh://git@digitalmng:8022/argocd/applications.git'
+        # targetRevision: qa
+        targetRevision: '{{`{{ path[1] }}`}}'
+      syncPolicy:
+        automated: {
+          prune: true
+        }
+        syncOptions:
+          - CreateNamespace=true
