@@ -8,7 +8,7 @@ spec:
   - git:
       directories:
       - path: applicationsets/*/*/*
-      repoURL: 'git@github.com:Tiriyon/AoA.git'
+      repoURL: 'ENVIRONMENTS REPO URL'
       revision: main
   template:
     metadata:
@@ -24,7 +24,7 @@ spec:
             global:
               path: '{{ path }}'
         path: '{{ path }}'
-        repoURL: 'git@github.com:Tiriyon/AoA.git'
+        repoURL: 'eENVIRONMENTS REPO'
         targetRevision: main
       syncPolicy:
         automated: {}
