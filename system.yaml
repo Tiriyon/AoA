@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: observability
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      files:
+      - path: system/observability/configs/*
+      repoURL: environments repo
+      revision: master
+  template:
+    metadata:
+      name: 'sys-{{ argocd.appName }}'
+    spec:
+      destination:
+        name: '{{ destination.cluster }}'
+        namespace: observability
+      project: system
+      source:
+        helm:
+          values: |
+        path: '{{ source.path }}'
+        repoURL: system repo
+        targetRevision: master
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true
